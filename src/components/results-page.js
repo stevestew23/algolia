@@ -56,7 +56,7 @@ class ResultPage {
         templates: {
           item: resultHit,
         },
-        // *** This is where
+        // *** This is where I tried to implement sending click and conversion events to Algolia
 
         // templates: {
         //   item: (resultHit, bindEvent) => {
