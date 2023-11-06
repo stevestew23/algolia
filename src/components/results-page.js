@@ -31,12 +31,12 @@ class ResultPage {
       insightsClient: window.aa,
     })
 
+    this._searchInstance.use(insightsMiddleware);
+
     this._searchInstance = instantsearch({
       indexName: process.env.ALGOLIA_INDEX,
       searchClient: this._searchClient,
     });
-
-    this._searchInstance.use(insightsMiddleware);
   }
 
   /**
