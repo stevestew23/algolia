@@ -27,16 +27,30 @@ class ResultPage {
       process.env.ALGOLIA_API_KEY
     );
 
-    const insightsMiddleware = createInsightsMiddleware({
+    /*const insightsMiddleware = createInsightsMiddleware({
       insightsClient: window.aa,
     })
 
-    this._searchInstance.use(insightsMiddleware);
+    this._searchInstance.use(insightsMiddleware);*/
 
     this._searchInstance = instantsearch({
       indexName: process.env.ALGOLIA_INDEX,
       searchClient: this._searchClient,
     });
+
+    const insightsMiddleware = createInsightsMiddleware({
+      insightsClient: aa,
+    });
+
+    // aa('setUserToken', 'user-1');
+
+    this._searchInstance.use(insightsMiddleware);
+
+    /*this._searchClient.use(
+      instantsearch.middlewares.createInsightsMiddleware({
+        insightsClient: window.aa,
+      })
+    );*/
   }
 
   /**
@@ -56,26 +70,27 @@ class ResultPage {
         templates: {
           item: resultHit,
         },
-        // *** This is where I tried to implement sending click and conversion events to Algolia
+        // *** This is where I tried to implement sending click and conversion events to Algolia. When it is commented
+        // clicks are picked up in the Insights Validator Chrome Ext and the price of products go away.
 
-        // templates: {
-        //   item: (resultHit, bindEvent) => {
-        //     const productUrl = 'product.html?objectID=' + resultHit.objectID;
-        //
-        //     return `
-        //       <a class="hit-card" href="${productUrl}" ${bindEvent(
-        //         'click',
-        //         resultHit,
-        //         'Search Result Clicked'
-        //       )}>
-        //         <div class="hit-content">
-        //             <img src="${resultHit.image}" alt="${resultHit.name}" />
-        //             <div class="hit-name">${resultHit._highlightResult.name.value}</div>
-        //         </div>
-        //       </a>
-        //     `;
-        //   },
-        // },
+/*         templates: {
+           item: (resultHit, bindEvent) => {
+             const productUrl = 'product.html?objectID=' + resultHit.objectID;
+
+             return `
+               <a class="hit-card" href="${productUrl}" ${bindEvent(
+                 'click',
+                 resultHit,
+                 'Search Result Clicked'
+               )}>
+                 <div class="hit-content">
+                     <img src="${resultHit.image}" alt="${resultHit.name}" />
+                     <div class="hit-name">${resultHit._highlightResult.name.value}</div>
+                 </div>
+               </a>
+             `;
+           },
+         },*/
       }),
       pagination({
         container: '#pagination',
